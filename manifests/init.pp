@@ -5,7 +5,7 @@ class tomcat7 (
 
   include tomcat7::params
 
-  Package['tomcat7'] -> File[$tomcat7::params::tomcat_settings] ~> Service['tomcat7']
+  Package[$tomcat7::params::jdk] -> Package['tomcat7'] -> File[$tomcat7::params::tomcat_settings] ~> Service['tomcat7']
 
   if $tomcat_user == '' {
     $tomcat_user_internal = $tomcat7::params::tomcat_user
@@ -27,6 +27,10 @@ class tomcat7 (
         include_src => false,
       }
     }
+  }
+
+  package {$tomcat7::params::jdk:
+    ensure => installed,
   }
 
   package {'tomcat7' :
