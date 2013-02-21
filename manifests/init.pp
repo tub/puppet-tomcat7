@@ -5,7 +5,7 @@ class tomcat7 (
 
   include tomcat7::params
 
-  Package[$tomcat7::params::jdk] -> Package['tomcat7'] -> File[$tomcat7::params::tomcat_settings] ~> Service['tomcat7']
+  Apt::Source['debian_testing'] -> Package[$tomcat7::params::jdk] -> Package['tomcat7'] -> File[$tomcat7::params::tomcat_settings] ~> Service['tomcat7']
 
   if $tomcat_user == '' {
     $tomcat_user_internal = $tomcat7::params::tomcat_user
@@ -18,8 +18,6 @@ class tomcat7 (
       require jpackage
     }
     'Debian' : {
-      require apt
-
       apt::source { "debian_testing":
         location    => "http://debian.mirror.iweb.ca/debian/",
         release     => "testing",
