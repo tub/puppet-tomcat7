@@ -5,7 +5,7 @@ class tomcat7 (
 
   include tomcat7::params
 
-  Apt::Source['debian_testing'] -> Package[$tomcat7::params::jdk] -> Package['tomcat7'] -> File[$tomcat7::params::tomcat_settings] ~> Service['tomcat7']
+  Package[$tomcat7::params::jdk] -> Package['tomcat7'] -> File[$tomcat7::params::tomcat_settings] ~> Service['tomcat7']
 
   if $tomcat_user == '' {
     $tomcat_user_internal = $tomcat7::params::tomcat_user
@@ -23,6 +23,7 @@ class tomcat7 (
         release     => "testing",
         repos       => "main contrib non-free",
         include_src => false,
+        before      => Package[$tomcat7::params::jdk],
       }
     }
   }

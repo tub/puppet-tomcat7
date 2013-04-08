@@ -15,4 +15,5 @@ class tomcat7::params {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem: ${::operatingsystem}, module ${module_name} only support osfamily RedHat Debian")
     }
   }
+
 }
