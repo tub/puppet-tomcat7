@@ -17,15 +17,6 @@ class tomcat7 (
     'RedHat' : {
       require jpackage
     }
-    'Debian' : {
-      apt::source { "debian_testing":
-        location    => "http://debian.mirror.iweb.ca/debian/",
-        release     => "testing",
-        repos       => "main contrib non-free",
-        include_src => false,
-        before      => Package[$tomcat7::params::jdk],
-      }
-    }
   }
 
   package {$tomcat7::params::jdk:
